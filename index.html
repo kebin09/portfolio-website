@@ -146,6 +146,10 @@
         }
 
         .flip-card:hover .flip-card-inner {
+            transform: none;
+        }
+        
+        .flip-card.image-hovered .flip-card-inner {
             transform: rotateY(180deg);
         }
 
@@ -909,9 +913,15 @@
             color: var(--text-secondary-light);
         }
 
-        .hero-btns {
+        .hero-btns-fixed {
             display: flex;
             gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
         .btn {
@@ -1065,7 +1075,7 @@
             border-radius: 15px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             z-index: 2;
-            top: 50%;
+            top: 45%;
             left: 50%;
             transform: translate(-50%, -50%) perspective(1000px) rotateY(10deg);
             transition: var(--transition);
@@ -1957,12 +1967,14 @@
                 text-align: center;
             }
 
-            .hero-btns {
+            .hero-btns-fixed {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 flex-wrap: wrap;
                 width: 100%;
+                position: static;
+                margin: 2rem auto 0;
             }
 
             section {
@@ -2008,9 +2020,26 @@
                 min-height: 100vh;
             }
 
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                width: 100%;
+                height: 100vh;
+                position: relative;
+                z-index: 2;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
             .hero h1 {
                 font-size: 2.8rem;
                 margin-bottom: 1rem;
+                text-align: center;
             }
 
             .hero p {
@@ -2111,19 +2140,23 @@
                 height: 220px;
             }
 
-            .hero-btns {
+            .hero-btns-fixed {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 gap: 1rem;
                 width: 100%;
+                position: static;
+                margin: 0 auto;
             }
             
-            .hero-btns .btn {
+            .hero-btns-fixed .btn {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                width: auto;
+                min-width: 200px;
             }
 
 
@@ -2320,7 +2353,7 @@
                 <span id="typed-name" class="glitch" data-text=""></span>
                 <span id="typed-role"></span>
             </h1>
-            <div class="hero-btns">
+            <div class="hero-btns-fixed">
                 <a class="btn btn-primary magnetic ripple" href="#projects">
                     <i class="fas fa-code bounce"></i> View My Work
                 </a>
@@ -2328,7 +2361,7 @@
                     <i class="fas fa-paper-plane floating"></i> Contact Me
                 </a>
             </div>
-        </div>
+            </div>
         <div class="hero-visual">
             <div class="hero-geometric">
                 <div class="shape shape-1 rotate"></div>
@@ -2429,8 +2462,10 @@
                 </div>
             </div>
             <!-- Project 2 -->
-            <div class="project-card" data-aos="fade-up">
-                <img alt="Project 2" class="project-img" src="project2.png"/>
+            <div class="project-card flip-card tilt" data-aos="fade-up" data-aos-delay="100">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                    <img alt="Project 2" class="project-img" src="project2.png"/>
                 <div class="project-content">
                     <h3 class="project-title">E-Commerce App</h3>
                     <p class="project-description">An E-Commerce App that enables users to browse, search, and securely purchase products online with ease.</p>
@@ -2444,9 +2479,21 @@
                     </div>
                 </div>
             </div>
+                    <div class="flip-card-back">
+                        <div>
+                            <h3>📱 E-Commerce App</h3>
+                            <p>Fully functional Android e-commerce application with SQLite database integration.</p>
+                            <div class="counter" data-target="100">0</div>
+                            <p>% Complete</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <div class="project-card" data-aos="fade-up">
-                <img alt="Project 2" class="project-img" src="project4.png"/>
+            <div class="project-card flip-card tilt" data-aos="fade-up" data-aos-delay="100">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                    <img alt="Project 2" class="project-img" src="project4.png"/>
                 <div class="project-content">
                     <h3 class="project-title">College Staff Management System</h3>
                     <p class="project-description">A Management system which helps in keeping record of staffs and their Performance.</p>
@@ -2459,9 +2506,20 @@
                         <a href="#" onclick="openModal()" style="color: var(--accent-primary); font-weight: 500; transition: 0.3s;">📷 View Screenshot</a>
                     </div>
                 </div>
-            </div>            
+            </div> 
+                    <div class="flip-card-back">
+                        <div>
+                            <h3>🏫 College Staff Management System</h3>
+                            <p>Web application for managing staff attendance, leave requests, and department records.</p>
+                            <div class="counter" data-target="100">0</div>
+                            <p>% Complete</p>
+                        </div>
+                    </div>
+                </div>
+            </div>                       
             <!-- Project 3 -->
-            <div class="project-card" data-aos="fade-up">
+            <div class="project-card flip-card tilt" data-aos="fade-up" data-aos-delay="100">
+
                 <img alt="Project 3" class="project-img" src="project3.png"/>
                 <div class="project-content">
                     <h3 class="project-title">Hotel Recommendation System</h3>
@@ -2477,7 +2535,7 @@
                         <a href="#" onclick="openModal()" style="color: var(--accent-primary); font-weight: 500; transition: 0.3s;">📷 View Screenshot</a>
                     </div>
                 </div>
-            </div>
+            </div>           
         </div>
     </section>
     
@@ -2489,38 +2547,38 @@
             <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <div class="timeline-date">2015 - 2019</div>
-                    <h3 class="timeline-title">Bachelor's in Computer Science</h3>
-                    <p class="timeline-description">University of Technology, Kathmandu. Specialized in Software Engineering and Human-Computer Interaction.</p>
+                    <div class="timeline-date">2021 - Present</div>
+                    <h3 class="timeline-title">Bachelor's in Computer Application</h3>
+                    <p class="timeline-description">Tribhuvan University, Kathmandu</p>
                 </div>
             </div>
             <!-- Work 1 -->
             <div class="timeline-item" data-aos="fade-up">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <div class="timeline-date">2019 - 2020</div>
-                    <h3 class="timeline-title">Junior Frontend Developer</h3>
-                    <p class="timeline-description">Digital Solutions Inc. Worked on client projects, implementing responsive designs and optimizing web performance.</p>
+                    <div class="timeline-date">2019 - 2021</div>
+                    <h3 class="timeline-title">High School - Computer Science</h3>
+                    <p class="timeline-description">Everst Innovative College, Kathmandu</p>
                 </div>
             </div>
             <!-- Education 2 -->
             <div class="timeline-item" data-aos="fade-up">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <div class="timeline-date">2020</div>
-                    <h3 class="timeline-title">UI/UX Design Certification</h3>
-                    <p class="timeline-description">Completed advanced certification in User Interface and Experience Design from Design Academy.</p>
+                    <div class="timeline-date">Completed</div>
+                    <h3 class="timeline-title">Secondary School</h3>
+                    <p class="timeline-description">Sunshine High School, Kathmandu</p>
                 </div>
             </div>
             <!-- Work 2 -->
-            <div class="timeline-item" data-aos="fade-up">
+            <!-- <div class="timeline-item" data-aos="fade-up">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <div class="timeline-date">2020 - Present</div>
                     <h3 class="timeline-title">Senior Full Stack Developer</h3>
                     <p class="timeline-description">Tech Innovations Ltd. Leading development teams and architecting complex web applications for enterprise clients.</p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
     
@@ -3049,6 +3107,17 @@
             });
         }
         
+        // Project card image hover flip
+        document.querySelectorAll('.project-img').forEach(img => {
+            img.addEventListener('mouseenter', function() {
+                this.closest('.flip-card').classList.add('image-hovered');
+            });
+            
+            img.addEventListener('mouseleave', function() {
+                this.closest('.flip-card').classList.remove('image-hovered');
+            });
+        });
+        
         // AI Chatbot Functionality
         const chatbotKnowledge = {
             name: "Kebin Maharjan",
@@ -3313,8 +3382,8 @@
             // Top animation: Name
             new Typed('#typed-name', {
                 strings: ["Hi, I'm Kebin Maharjan"],
-                typeSpeed: 130,
-                backSpeed: 445,
+                typeSpeed: 1,
+                backSpeed: 445000000,
                 loop: true,
                 showCursor: false
             });
@@ -3322,8 +3391,8 @@
             // Bottom animation: Roles
             new Typed('#typed-role', {
                 strings: ["Creative Developer", "UI/UX Designer"],
-                typeSpeed: 150,
-                backSpeed: 550,
+                typeSpeed: 1,
+                backSpeed: 550000000,
                 loop: true
             });
         });
