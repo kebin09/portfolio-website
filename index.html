@@ -913,6 +913,35 @@
             color: var(--text-secondary-light);
         }
 
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        body.light-mode .stat-label {
+            color: var(--text-secondary-light);
+        }
+        
         .hero-btns-fixed {
             display: flex;
             gap: 1.5rem;
@@ -1251,11 +1280,102 @@
             transition: width 1s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
+        /* Technical Skills Section */
+        .tech-skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .skill-category {
+            background: linear-gradient(145deg, var(--card-bg-dark), #252530);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: var(--transition);
+        }
+        
+        body.light-mode .skill-category {
+            background: linear-gradient(145deg, var(--card-bg-light), #f8fafc);
+        }
+        
+        .skill-category:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+        
+        .skill-category h3 {
+            color: var(--accent-primary);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        body.light-mode .skill-category h3 {
+            color: var(--accent-secondary);
+        }
+        
+        .skill-category p {
+            color: var(--text-secondary-dark);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        body.light-mode .skill-category p {
+            color: var(--text-secondary-light);
+        }
+        
+        .tech-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .tech-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .tech-item:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+        
+        .level {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .level.advanced {
+            background: linear-gradient(135deg, var(--accent-quaternary), #059669);
+            color: white;
+        }
+        
+        .level.intermediate {
+            background: linear-gradient(135deg, var(--accent-tertiary), #0891b2);
+            color: white;
+        }
+
         /* Projects Section */
+        #projects {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2.5rem;
+            opacity: 1 !important;
+            visibility: visible !important;
         }
 
         .project-card {
@@ -1267,6 +1387,9 @@
             position: relative;
             border: 1px solid rgba(99, 102, 241, 0.2);
             backdrop-filter: blur(10px);
+            opacity: 1 !important;
+            visibility: visible !important;
+            display: block !important;
         }
 
         body.light-mode .project-card {
@@ -1822,6 +1945,18 @@
             margin-bottom: 2rem;
             text-transform: uppercase;
             letter-spacing: 3px;
+            animation: loadingPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes loadingPulse {
+            0%, 100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
         }
 
         .loading-bar {
@@ -2333,7 +2468,7 @@
             <a href="#projects">Projects</a>
             <a href="#resume">Resume</a>
             <a href="#contact">Contact</a>
-            <a href="resume.pdf">Download Resume</a>
+            <a href="/resume.pdf">Download Resume</a>
             <button aria-label="Toggle theme" class="theme-toggle">
                 <i class="fas fa-moon"></i>
             </button>
@@ -2353,6 +2488,20 @@
                 <span id="typed-name" class="glitch" data-text=""></span>
                 <span id="typed-role"></span>
             </h1>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">3+</div>
+                    <div class="stat-label">Years Learning</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4+</div>
+                    <div class="stat-label">Projects Built</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Technologies</div>
+                </div>
+            </div>
             <div class="hero-btns-fixed">
                 <a class="btn btn-primary magnetic ripple" href="#projects">
                     <i class="fas fa-code bounce"></i> View My Work
@@ -2382,7 +2531,7 @@
             </div>
             <div class="about-text" data-aos="fade-left">
                 <h3>Who am I?</h3>
-                <p>I'm a passionate developer and designer with 5 years of experience creating beautiful, functional digital experiences. I specialize in front-end development, UI/UX design, and bringing creative visions to life through code.</p>
+                <p>I'm a BCA student and beginner developer who is learning to build websites and applications. I’m passionate about coding, design, and exploring new technologies as I grow my skills in front-end and back-end development and UI/UX design.</p>
                 <p>When I'm not coding, you can find me exploring new design trends, contributing to open-source projects, or hiking in the mountains for inspiration.</p>
                 <div class="skills">
                     <div class="skill-item">
@@ -2426,6 +2575,43 @@
         </div>
     </section>
     
+    <!-- Technical Skills Section -->
+    <section id="skills">
+        <h2 class="section-title" data-aos="fade-up">Technical <span>Skills</span></h2>
+        <div class="tech-skills-grid">
+            <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+                <h3>Backend Development</h3>
+                <p>Server-side technologies and frameworks</p>
+                <div class="tech-list">
+                    <div class="tech-item"><span>Python</span><span class="level advanced">Advanced</span></div>
+                    <div class="tech-item"><span>Java (OOP)</span><span class="level intermediate">Intermediate</span></div>
+                    <div class="tech-item"><span>PHP</span><span class="level intermediate">Intermediate</span></div>
+                    <div class="tech-item"><span>MySQL</span><span class="level intermediate">Intermediate</span></div>
+                </div>
+            </div>
+            <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+                <h3>Frontend Development</h3>
+                <p>Client-side technologies and design</p>
+                <div class="tech-list">
+                    <div class="tech-item"><span>JavaScript</span><span class="level intermediate">Intermediate</span></div>
+                    <div class="tech-item"><span>HTML5</span><span class="level advanced">Advanced</span></div>
+                    <div class="tech-item"><span>CSS3</span><span class="level advanced">Advanced</span></div>
+                    <div class="tech-item"><span>UI/UX Design</span><span class="level intermediate">Intermediate</span></div>
+                </div>
+            </div>
+            <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+                <h3>Tools & Technologies</h3>
+                <p>Development tools and platforms</p>
+                <div class="tech-list">
+                    <div class="tech-item"><span>Git & GitHub</span><span class="level intermediate">Intermediate</span></div>
+                    <div class="tech-item"><span>WordPress</span><span class="level intermediate">Intermediate</span></div>
+                    <div class="tech-item"><span>SEO & Content Writing</span><span class="level intermediate">Intermediate</span></div>
+                    <div class="tech-item"><span>Bootstrap 5</span><span class="level advanced">Advanced</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <!-- Projects Section -->
     <section id="projects">
         <h2 class="section-title" data-aos="fade-up">My <span>Projects</span></h2>
@@ -2446,7 +2632,7 @@
                                 <span class="tech-tag scale-hover">MySQl</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" class="magnetic"><i class="fab fa-github"></i> Code</a>
+                                <a href="https://github.com/kebinmaharjan" class="magnetic"><i class="fab fa-github"></i> Code</a>
                                 <a href="#" onclick="openModal()" class="magnetic" style="color: var(--accent-primary); font-weight: 500; transition: 0.3s;">📷 View Screenshot</a>
                             </div>
                         </div>
@@ -2474,7 +2660,7 @@
                         <span class="tech-tag">SQLite </span>
                     </div>
                     <div class="project-links">
-                        <a href="#"><i class="fab fa-github"></i> Code</a>
+                        <a href="https://github.com/kebinmaharjan"><i class="fab fa-github"></i> Code</a>
                         <a href="#" onclick="openModal()" style="color: var(--accent-primary); font-weight: 500; transition: 0.3s;">📷 View Screenshot</a>
                     </div>
                 </div>
@@ -2502,7 +2688,7 @@
                         <span class="tech-tag">MySql </span>
                     </div>
                     <div class="project-links">
-                        <a href="#"><i class="fab fa-github"></i> Code</a>
+                        <a href="https://github.com/kebinmaharjan"><i class="fab fa-github"></i> Code</a>
                         <a href="#" onclick="openModal()" style="color: var(--accent-primary); font-weight: 500; transition: 0.3s;">📷 View Screenshot</a>
                     </div>
                 </div>
@@ -2517,22 +2703,33 @@
                     </div>
                 </div>
             </div>                       
-            <!-- Project 3 -->
+            <!-- Project 4 -->
             <div class="project-card flip-card tilt" data-aos="fade-up" data-aos-delay="100">
-
-                <img alt="Project 3" class="project-img" src="project3.png"/>
-                <div class="project-content">
-                    <h3 class="project-title">Hotel Recommendation System</h3>
-                    <p class="project-description">A smart Hotel Recommendation System tailored for travelers in Nepal to discover and book the best stays based on reviews, location, and preferences.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">HTML</span>
-                        <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">PHP</span>
-                        <span class="tech-tag">MySQl</span>
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img alt="Project 4" class="project-img" src="project3.png"/>
+                        <div class="project-content">
+                            <h3 class="project-title">Hotel Recommendation System</h3>
+                            <p class="project-description">A smart Hotel Recommendation System tailored for travelers in Nepal to discover and book the best stays based on reviews, location, and preferences.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">PHP</span>
+                                <span class="tech-tag">MySQl</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/kebinmaharjan"><i class="fab fa-github"></i> Code</a>
+                                <a href="#" onclick="openModal()" style="color: var(--accent-primary); font-weight: 500; transition: 0.3s;">📷 View Screenshot</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="project-links">
-                        <a href="#"><i class="fab fa-github"></i> Code</a>
-                        <a href="#" onclick="openModal()" style="color: var(--accent-primary); font-weight: 500; transition: 0.3s;">📷 View Screenshot</a>
+                    <div class="flip-card-back">
+                        <div>
+                            <h3>🏨 Hotel Recommendation System</h3>
+                            <p>Smart recommendation system for travelers in Nepal with location-based filtering and user reviews.</p>
+                            <div class="counter" data-target="100">0</div>
+                            <p>% Complete</p>
+                        </div>
                     </div>
                 </div>
             </div>           
@@ -2895,6 +3092,13 @@
                     shape.style.animationDuration = '15s';
                 });
                 
+                // Ensure projects are visible
+                document.querySelectorAll('.project-card').forEach(card => {
+                    card.style.opacity = '1';
+                    card.style.visibility = 'visible';
+                    card.style.display = 'block';
+                });
+                
                 // Simplify scroll animations
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
@@ -3086,6 +3290,13 @@
         // Initialize animations on load
         window.addEventListener('load', () => {
             revealText();
+            
+            // Ensure projects are visible on load
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.style.opacity = '1';
+                card.style.visibility = 'visible';
+                card.style.display = 'block';
+            });
             
             // Add stagger animation to elements
             document.querySelectorAll('.stagger').forEach((element, index) => {
