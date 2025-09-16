@@ -1,0 +1,9 @@
+@echo off
+echo Starting Kebin's Portfolio...
+echo.
+echo Installing dependencies if needed...
+call npm install
+echo.
+echo Starting development server on port 3001...
+call npm start
+pause
