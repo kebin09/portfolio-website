@@ -24,7 +24,7 @@ const Admin = () => {
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 
   const handleLogin = (formData) => {
-    if (formData.password === 'admin123') {
+    if (formData.password === 'newpassword123') {
       setIsAuthenticated(true);
       localStorage.setItem('adminAuth', 'true');
       toast.success('Welcome back! 🎉');
