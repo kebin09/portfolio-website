@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { supabase } from '../utils/supabase';
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,7 +44,31 @@ const Admin = () => {
     if (savedData) {
       setData(JSON.parse(savedData));
     }
+    
+    // Load messages from Supabase
+    loadMessages();
   }, []);
+
+  const loadMessages = async () => {
+    try {
+      const { data: messages, error } = await supabase
+        .from('messages')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error loading messages:', error);
+        return;
+      }
+
+      setData(prevData => ({
+        ...prevData,
+        messages: messages || []
+      }));
+    } catch (error) {
+      console.error('Failed to load messages:', error);
+    }
+  };
 
   const saveData = (newData) => {
     setData(newData);

@@ -5,6 +5,7 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { portfolioData } from '../data/portfolio';
+import { supabase } from '../utils/supabase';
 
 const Contact = () => {
   const [ref, isIntersecting] = useIntersectionObserver();
@@ -13,32 +14,35 @@ const Contact = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Save message to localStorage for admin panel
-      const savedData = JSON.parse(localStorage.getItem('portfolioData') || '{}');
-      const newMessage = {
-        id: Date.now(),
-        ...data,
-        date: new Date().toISOString()
-      };
-      
-      const updatedData = {
-        ...savedData,
-        messages: [...(savedData.messages || []), newMessage]
-      };
-      
-      localStorage.setItem('portfolioData', JSON.stringify(updatedData));
-      
-      // Also send to Formspree (optional)
-      try {
-        await fetch('https://formspree.io/f/xdkdadrj', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
-      } catch (formspreeError) {
-        console.log('Formspree failed, but message saved locally');
+      // Save to Supabase database (global storage)
+      const { error } = await supabase
+        .from('messages')
+        .insert([
+          {
+            name: data.name,
+            email: data.email,
+            subject: data.subject,
+            message: data.message,
+            created_at: new Date().toISOString()
+          }
+        ]);
+
+      if (error) {
+        console.error('Supabase error:', error);
+        // Fallback to localStorage if Supabase fails
+        const savedData = JSON.parse(localStorage.getItem('portfolioData') || '{}');
+        const newMessage = {
+          id: Date.now(),
+          ...data,
+          date: new Date().toISOString()
+        };
+        
+        const updatedData = {
+          ...savedData,
+          messages: [...(savedData.messages || []), newMessage]
+        };
+        
+        localStorage.setItem('portfolioData', JSON.stringify(updatedData));
       }
       
       toast.success('Message sent successfully!');
