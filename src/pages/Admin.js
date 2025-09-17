@@ -45,8 +45,9 @@ const Admin = () => {
       setData(JSON.parse(savedData));
     }
     
-    // Load messages from Supabase
+    // Load messages and projects from Supabase
     loadMessages();
+    loadProjects();
   }, []);
 
   const loadMessages = async () => {
@@ -70,39 +71,78 @@ const Admin = () => {
     }
   };
 
+  const loadProjects = async () => {
+    try {
+      const { data: projects, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error loading projects:', error);
+        return;
+      }
+
+      setData(prevData => ({
+        ...prevData,
+        projects: projects || []
+      }));
+    } catch (error) {
+      console.error('Failed to load projects:', error);
+    }
+  };
+
   const saveData = (newData) => {
     setData(newData);
     localStorage.setItem('portfolioData', JSON.stringify(newData));
     toast.success('Changes saved successfully! ✨');
   };
 
-  const handleAddProject = (formData) => {
-    const newProject = {
-      id: Date.now(),
-      ...formData,
-      technologies: formData.technologies.split(',').map(t => t.trim()),
-      featured: formData.featured || false,
-      createdAt: new Date().toISOString()
-    };
-    
-    const newData = {
-      ...data,
-      projects: [...data.projects, newProject]
-    };
-    
-    saveData(newData);
-    reset();
-    setEditingItem(null);
+  const handleAddProject = async (formData) => {
+    try {
+      const { error } = await supabase
+        .from('projects')
+        .insert([
+          {
+            title: formData.title,
+            description: formData.description,
+            image: formData.image,
+            technologies: formData.technologies.split(',').map(t => t.trim()),
+            github: formData.github,
+            demo: formData.demo,
+            featured: formData.featured || false
+          }
+        ]);
+
+      if (error) {
+        console.error('Supabase error:', error);
+        toast.error('Failed to save project');
+        return;
+      }
+
+      toast.success('Project added successfully!');
+      reset();
+      setEditingItem(null);
+      loadProjects(); // Reload projects
+    } catch (error) {
+      toast.error('Failed to save project');
+    }
   };
 
-  const handleDeleteProject = (id) => {
+  const handleDeleteProject = async (id) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
-      const newData = {
-        ...data,
-        projects: data.projects.filter(project => project.id !== id)
-      };
-      saveData(newData);
+      const { error } = await supabase
+        .from('projects')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        toast.error('Failed to delete project');
+        return;
+      }
+
       toast.success('Project deleted successfully! 🗑️');
+      loadProjects(); // Reload projects
     }
   };
 

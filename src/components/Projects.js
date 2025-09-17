@@ -1,14 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Github, ExternalLink, Filter, Star, Eye } from 'lucide-react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { portfolioData } from '../data/portfolio';
+import { supabase } from '../utils/supabase';
 
 const Projects = () => {
   const [ref, isIntersecting] = useIntersectionObserver();
   const [filter, setFilter] = useState('all');
   const [, setHoveredProject] = useState(null);
-  const { projects } = portfolioData;
+  const [projects, setProjects] = useState(portfolioData.projects);
+
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    try {
+      const { data: supabaseProjects, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error loading projects:', error);
+        return;
+      }
+
+      // Combine Supabase projects with static projects
+      const allProjects = [...(supabaseProjects || []), ...portfolioData.projects];
+      setProjects(allProjects);
+    } catch (error) {
+      console.error('Failed to load projects:', error);
+    }
+  };
 
   const filteredProjects = filter === 'all' 
     ? projects 
