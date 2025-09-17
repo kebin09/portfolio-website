@@ -1,99 +1,22 @@
-import React, { useCallback } from 'react';
-import Particles from '@tsparticles/react';
-import { loadBasic } from '@tsparticles/basic';
+import React from 'react';
 
 const ParticleBackground = () => {
-  const particlesInit = useCallback(async (engine) => {
-    await loadBasic(engine);
-  }, []);
-
-  const particlesConfig = {
-    background: {
-      color: {
-        value: "transparent",
-      },
-    },
-    fpsLimit: 120,
-    interactivity: {
-      events: {
-        onClick: {
-          enable: true,
-          mode: "push",
-        },
-        onHover: {
-          enable: true,
-          mode: "connect",
-        },
-        resize: true,
-      },
-      modes: {
-        push: {
-          quantity: 4,
-        },
-        connect: {
-          distance: 80,
-          lineLinked: {
-            opacity: 0.5,
-          },
-          radius: 60,
-        },
-      },
-    },
-    particles: {
-      color: {
-        value: "#06b6d4",
-      },
-      links: {
-        color: "#06b6d4",
-        distance: 120,
-        enable: true,
-        opacity: 0.15,
-        width: 1,
-      },
-      move: {
-        direction: "none",
-        enable: true,
-        outModes: {
-          default: "bounce",
-        },
-        random: false,
-        speed: 0.3,
-        straight: false,
-      },
-      number: {
-        density: {
-          enable: true,
-          area: 1200,
-        },
-        value: 40,
-      },
-      opacity: {
-        value: 0.3,
-        random: false,
-        animation: {
-          enable: false,
-        },
-      },
-      shape: {
-        type: "circle",
-      },
-      size: {
-        value: 2,
-        animation: {
-          enable: false,
-        },
-      },
-    },
-    detectRetina: true,
-  };
-
   return (
-    <Particles
-      id="tsparticles"
-      init={particlesInit}
-      options={particlesConfig}
-      className="absolute inset-0 -z-10"
-    />
+    <div className="absolute inset-0 -z-10 overflow-hidden">
+      {/* Simple CSS particles */}
+      {[...Array(30)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute w-1 h-1 bg-cyan-400/30 rounded-full animate-pulse"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 3}s`,
+            animationDuration: `${2 + Math.random() * 2}s`
+          }}
+        />
+      ))}
+    </div>
   );
 };
 

@@ -63,8 +63,7 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
-                 Hello, I'm
-                 Hello, I'm
+                Hello, I'm
               </motion.p>
               
               {/* Futuristic Name Display */}
