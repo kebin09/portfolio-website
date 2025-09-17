@@ -17,6 +17,7 @@ const Admin = () => {
   const [data, setData] = useState({
     projects: [],
     blogs: [],
+    messages: [],
     personal: {}
   });
 
@@ -80,7 +81,6 @@ const Admin = () => {
     }
   };
 
-  // eslint-disable-next-line no-unused-vars
   const handleAddBlog = (formData) => {
     const newBlog = {
       id: Date.now(),
@@ -123,14 +123,15 @@ const Admin = () => {
     { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
     { id: 'projects', label: 'Projects', icon: FileText },
     { id: 'blogs', label: 'Blogs', icon: Users },
+    { id: 'messages', label: 'Messages', icon: Settings },
     { id: 'settings', label: 'Settings', icon: Settings }
   ];
 
   const stats = [
     { label: 'Total Projects', value: data.projects.length, icon: FileText, color: 'from-blue-500 to-cyan-500' },
     { label: 'Blog Posts', value: data.blogs.length, icon: Users, color: 'from-purple-500 to-pink-500' },
-    { label: 'Featured Projects', value: data.projects.filter(p => p.featured).length, icon: TrendingUp, color: 'from-green-500 to-emerald-500' },
-    { label: 'Total Views', value: '12.5K', icon: Eye, color: 'from-orange-500 to-red-500' }
+    { label: 'Messages', value: data.messages.length, icon: Settings, color: 'from-green-500 to-emerald-500' },
+    { label: 'Featured Projects', value: data.projects.filter(p => p.featured).length, icon: TrendingUp, color: 'from-orange-500 to-red-500' }
   ];
 
   if (!isAuthenticated) {
@@ -572,6 +573,162 @@ const Admin = () => {
                       </div>
                     </motion.div>
                   ))}
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === 'blogs' && (
+              <motion.div
+                key="blogs"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="space-y-6"
+              >
+                <div className="glass-card p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <div>
+                      <h2 className="text-2xl font-bold text-white">Blog Posts</h2>
+                      <p className="text-gray-400">Manage your blog content</p>
+                    </div>
+                    <motion.button
+                      onClick={() => setEditingItem({ type: 'blog' })}
+                      className="btn btn-primary"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Plus size={20} />
+                      Add Blog Post
+                    </motion.button>
+                  </div>
+
+                  {editingItem?.type === 'blog' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-6 p-6 bg-white/5 rounded-lg"
+                    >
+                      <form onSubmit={handleSubmit(handleAddBlog)} className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="form-label">Title</label>
+                            <input
+                              {...register('title', { required: 'Title is required' })}
+                              className="form-control"
+                              placeholder="Blog post title"
+                            />
+                          </div>
+                          <div>
+                            <label className="form-label">Tags</label>
+                            <input
+                              {...register('tags')}
+                              className="form-control"
+                              placeholder="React, JavaScript, Web Development"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="form-label">Content</label>
+                          <textarea
+                            {...register('content', { required: 'Content is required' })}
+                            className="form-control"
+                            rows={6}
+                            placeholder="Write your blog post content..."
+                          />
+                        </div>
+                        <div className="flex gap-4">
+                          <button type="submit" className="btn btn-primary">
+                            <Save size={20} />
+                            Save Blog Post
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setEditingItem(null)}
+                            className="btn btn-secondary"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    </motion.div>
+                  )}
+
+                  <div className="space-y-4">
+                    {data.blogs.map((blog, index) => (
+                      <motion.div
+                        key={blog.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="p-4 bg-white/5 rounded-lg"
+                      >
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <h3 className="text-lg font-bold text-white mb-2">{blog.title}</h3>
+                            <p className="text-gray-400 text-sm mb-3 line-clamp-2">{blog.content}</p>
+                            <div className="flex gap-2">
+                              {blog.tags?.map((tag) => (
+                                <span key={tag} className="px-2 py-1 bg-indigo-500/20 text-indigo-300 rounded text-xs">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <button className="p-2 text-red-400 hover:bg-red-500/20 rounded-lg">
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === 'messages' && (
+              <motion.div
+                key="messages"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="space-y-6"
+              >
+                <div className="glass-card p-6">
+                  <div className="mb-6">
+                    <h2 className="text-2xl font-bold text-white">Contact Messages</h2>
+                    <p className="text-gray-400">Messages from your portfolio contact form</p>
+                  </div>
+
+                  <div className="space-y-4">
+                    {data.messages.length === 0 ? (
+                      <div className="text-center py-12">
+                        <p className="text-gray-400">No messages yet</p>
+                      </div>
+                    ) : (
+                      data.messages.map((message, index) => (
+                        <motion.div
+                          key={message.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="p-4 bg-white/5 rounded-lg"
+                        >
+                          <div className="flex justify-between items-start mb-3">
+                            <div>
+                              <h3 className="text-lg font-bold text-white">{message.name}</h3>
+                              <p className="text-indigo-400">{message.email}</p>
+                            </div>
+                            <span className="text-gray-400 text-sm">
+                              {new Date(message.date).toLocaleDateString()}
+                            </span>
+                          </div>
+                          <p className="text-gray-300">{message.message}</p>
+                        </motion.div>
+                      ))
+                    )}
+                  </div>
                 </div>
               </motion.div>
             )}

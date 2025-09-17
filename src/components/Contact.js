@@ -13,20 +13,36 @@ const Contact = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('https://formspree.io/f/xdkdadrj', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        toast.success('Message sent successfully!');
-        reset();
-      } else {
-        throw new Error('Failed to send message');
+      // Save message to localStorage for admin panel
+      const savedData = JSON.parse(localStorage.getItem('portfolioData') || '{}');
+      const newMessage = {
+        id: Date.now(),
+        ...data,
+        date: new Date().toISOString()
+      };
+      
+      const updatedData = {
+        ...savedData,
+        messages: [...(savedData.messages || []), newMessage]
+      };
+      
+      localStorage.setItem('portfolioData', JSON.stringify(updatedData));
+      
+      // Also send to Formspree (optional)
+      try {
+        await fetch('https://formspree.io/f/xdkdadrj', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+      } catch (formspreeError) {
+        console.log('Formspree failed, but message saved locally');
       }
+      
+      toast.success('Message sent successfully!');
+      reset();
     } catch (error) {
       toast.error('Failed to send message. Please try again.');
     }
