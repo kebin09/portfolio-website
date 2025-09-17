@@ -114,7 +114,7 @@ src/
 
 ## License
 
-MIT License - feel free to use this template for your own portfolio!
+This belongs to Kebin Maharjan.
 
 ## Contact
 
